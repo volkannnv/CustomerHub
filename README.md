@@ -14,7 +14,7 @@ UI'da bir sürü pop-up var, adres ve telefon numaralarının görüntülenmesin
 proje geneli çok sıkı bir denetim yok, şifre güvenliği olsun telefon numaralarının formatı olsun adres olsun. bir an önce elimde gösterebileceğim bir şey olması için es geçtim.
 onun haricinde sanırım konuşulmamıştı ama kullanıcıların username ve şifre değştirebilecekleri bir kullanıcı sayfası da yaptım. 
 
-repo'yu açmamın ana sebebi olur da denk gelmez de uzaktan bağlanamazsanız diye kodları inceleyebilmeniz için, demo videosundan sonra kendi local'inizde deneyebilmeniz için database'i oluştururken kullandığım query'yi de bir txt dosyası yapıp pushlayacağım. en kötü ihtimal unutursam whatsapp'tan da iletebilirim. 
+repo'yu açmamın ana sebebi olur da denk gelmez de uzaktan bağlanamazsanız diye kodları inceleyebilmeniz için, demo videosundan sonra kendi local'inizde deneyebilmeniz için database'i oluştururken kullandığım query'yi de bir txt dosyası yapıp push'ladım.
 
 
-Döküman yazmaya alışık değilim, formatı ve üslubum uygun değilse bu seferlik mazur görün lütfen. tekrardan ilgilendiğiniz için teşekkür ederim
+Döküman yazmaya alışık değilim, formatı ve üslubum uygun değilse bu seferlik mazur görün lütfen. tekrardan ilgilendiğiniz için teşekkür ederim.
