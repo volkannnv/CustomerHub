@@ -1,8 +1,11 @@
 using CustomerHub.Data;
+using CustomerHub.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<DatabaseHelper>();
+builder.Services.AddScoped<CustomerService>();
+
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => {

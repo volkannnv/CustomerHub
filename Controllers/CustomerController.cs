@@ -3,19 +3,34 @@ using CustomerHub.Data;
 using CustomerHub.Models;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using CustomerHub.Services;
 
 namespace CustomerHub.Controllers
 {
     public class CustomerController : Controller
     {
         private readonly DatabaseHelper _db;
+        private readonly CustomerService _customerService;
 
-        public CustomerController(DatabaseHelper db)
+        public CustomerController(DatabaseHelper db, CustomerService customerService)
         {
             _db = db;
+            _customerService = customerService;
         }
 
-        
+        public IActionResult AdminCustomers()
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (!userId.HasValue)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            List<AdminCustomer> model = _customerService.GetAdminCustomers(userId.Value);
+            return View(model);
+        }
+
+
         public IActionResult Index()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
