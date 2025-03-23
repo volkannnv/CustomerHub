@@ -15,13 +15,10 @@ namespace CustomerHub.Services
             _connectionString = configuration.GetConnectionString("CustomerHubConnection");
         }
 
-        // Gets a list of admin customers for a specific user
         public List<AdminCustomer> GetAdminCustomers(int userId)
         {
-            // Create our result list
             var customers = new List<AdminCustomer>();
 
-            // SQL query to get customer data
             string sql = @"
                 SELECT 
                     c.CustomerId,
@@ -58,7 +55,6 @@ namespace CustomerHub.Services
                         {
                             while (reader.Read())
                             {
-                                // Create new customer from each row
                                 var customer = new AdminCustomer
                                 {
                                     CustomerId = reader.GetInt32(0),

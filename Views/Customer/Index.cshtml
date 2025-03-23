@@ -66,7 +66,13 @@
             text-decoration: underline;
             cursor: pointer;
         }
-        /* Overlay and Popup Styling */
+        #customerSearch {
+            width: 50%;
+            max-width: 400px;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
         .overlay {
             display: none;
             position: fixed;
@@ -117,6 +123,8 @@
             <button class="btn" onclick="location.href='/Customer/AdminCustomers'">Admin</button>
             <button class="btn" onclick="location.href='/Account/Logout'">Logout</button>
         </div>
+        <!-- Search bar -->
+        <input type="text" id="customerSearch" placeholder="Search customers..." onkeyup="filterCustomers()" />
         <div class="table-container">
             <div class="scrollable">
                 <table id="customersTable">
@@ -157,7 +165,6 @@
         </div>
     </div>
 
-    <!-- Yeni Customer pop-up -->
     <div id="newCustomerOverlay" class="overlay">
         <div class="popup">
             <span class="closeBtn" onclick="closeNewCustomerPopup()">X</span>
@@ -174,7 +181,6 @@
         </div>
     </div>
 
-    <!-- Edit Customer pop-up -->
     <div id="editCustomerOverlay" class="overlay">
         <div class="popup">
             <span class="closeBtn" onclick="closeEditCustomerPopup()">X</span>
@@ -188,7 +194,6 @@
         </div>
     </div>
 
-    <!-- Adres pop-up -->
     <div id="addressOverlay" class="overlay">
         <div class="popup" id="addressPopup">
             <span class="closeBtn" onclick="closeAddressPopup()">X</span>
@@ -197,7 +202,6 @@
                 <table id="addressTable" style="width:100%; border-collapse:collapse; text-align:center;"></table>
             </div>
             <a href="#" class="link-blue" onclick="openNewAddressPopup()">add a new address</a>
-            <!-- adres sub pop-up -->
             <div id="newAddressPopup" class="sub-popup">
                 <span style="cursor:pointer; float:right;" onclick="closeNewAddressPopup()">X</span>
                 <h4>Add New Address</h4>
@@ -209,7 +213,6 @@
         </div>
     </div>
 
-    <!-- telefon pop-up -->
     <div id="phoneOverlay" class="overlay">
         <div class="popup" id="phonePopup">
             <span class="closeBtn" onclick="closePhonePopup()">X</span>
@@ -218,7 +221,6 @@
                 <table id="phoneTable" style="width:100%; border-collapse:collapse; text-align:center;"></table>
             </div>
             <a href="#" class="link-blue" onclick="openNewPhonePopup()">add a new number</a>
-            <!-- Yeni telefon sub pop-up -->
             <div id="newPhonePopup" class="sub-popup">
                 <span style="cursor:pointer; float:right;" onclick="closeNewPhonePopup()">X</span>
                 <h4>Add New Phone</h4>
@@ -231,9 +233,27 @@
     </div>
 
     <script>
+        
 
-        // Alfabetik sort
+        // Search Bar
 
+
+        function filterCustomers() {
+            var input = document.getElementById("customerSearch");
+            var filter = input.value.toUpperCase();
+            var table = document.getElementById("customersTable");
+            var tr = table.getElementsByTagName("tr");
+            for (var i = 1; i < tr.length; i++) {
+                var td = tr[i].getElementsByTagName("td")[0]; // Name column
+                if (td) {
+                    var txtValue = td.textContent || td.innerText;
+                    tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+                }
+            }
+        }
+
+        // Alfabetik Sort
+        
         let sortDirection = { name: 'asc' };
         function sortTable(column) {
             const table = document.getElementById("customersTable");
@@ -252,7 +272,9 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        // Yeni Customer pop-up
+
+        // Yeni Customer Popup
+       
 
         function openNewCustomerPopup() {
             document.getElementById('newCustomerOverlay').style.display = 'block';
@@ -261,7 +283,9 @@
             document.getElementById('newCustomerOverlay').style.display = 'none';
         }
 
-        // Edit Customer pop-up 
+
+        // Edit Customer Popup
+
 
         let currentCustomerId = 0;
         function openEditCustomerPopup(customerId, customerName) {
@@ -303,8 +327,10 @@
                 .catch(err => console.error(err));
         }
 
-        // Adres pop-up
-        
+
+        // Address Popup
+
+
         let currentCustomerIdForAddresses = 0;
         function openAddressPopup(customerId) {
             currentCustomerIdForAddresses = customerId;
@@ -331,7 +357,11 @@
             }
             addresses.forEach(addr => {
                 const row = document.createElement('tr');
-                // Adres Input
+
+
+                // Adres input 
+
+
                 const addressCell = document.createElement('td');
                 addressCell.style.border = "1px solid #000";
                 const addressInput = document.createElement('input');
@@ -340,7 +370,11 @@
                 addressInput.disabled = true;
                 addressInput.style.width = "90%";
                 addressCell.appendChild(addressInput);
-                // Edit/Confirm 
+
+
+                // Edit/Confirm
+
+
                 const editCell = document.createElement('td');
                 editCell.style.border = "1px solid #000";
                 const editBtn = document.createElement('button');
@@ -356,7 +390,11 @@
                     }
                 };
                 editCell.appendChild(editBtn);
-                // Delete
+
+
+                // Delete 
+
+
                 const delCell = document.createElement('td');
                 delCell.style.border = "1px solid #000";
                 const delBtn = document.createElement('button');
@@ -422,9 +460,10 @@
                 .catch(err => console.error("createAddress error:", err));
         }
 
-        
-        // Telefon pop-up
-        
+       
+        // Telefon Popup
+
+
         let currentCustomerIdForPhones = 0;
         function openPhonePopup(customerId) {
             currentCustomerIdForPhones = customerId;
@@ -451,7 +490,11 @@
             }
             phones.forEach(ph => {
                 const row = document.createElement('tr');
-                // Telefon input 
+
+
+                // Telefon input
+
+
                 const phoneCell = document.createElement('td');
                 phoneCell.style.border = "1px solid #000";
                 const phoneInput = document.createElement('input');
@@ -460,7 +503,11 @@
                 phoneInput.disabled = true;
                 phoneInput.style.width = "90%";
                 phoneCell.appendChild(phoneInput);
-                // Edit/Confirm
+
+
+                // Edit/Confirm 
+
+
                 const editCell = document.createElement('td');
                 editCell.style.border = "1px solid #000";
                 const editBtn = document.createElement('button');
@@ -476,7 +523,11 @@
                     }
                 };
                 editCell.appendChild(editBtn);
+
+
                 // Delete 
+
+
                 const delCell = document.createElement('td');
                 delCell.style.border = "1px solid #000";
                 const delBtn = document.createElement('button');

@@ -12,6 +12,7 @@
             background-color: #eee;
             font-family: Arial, sans-serif;
         }
+
         .page-container {
             display: flex;
             flex-direction: column;
@@ -19,34 +20,58 @@
             min-height: 100vh;
             padding: 20px;
         }
+
         h3 {
             margin-bottom: 10px;
         }
+
+        .btn {
+            padding: 6px 12px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
         .table-container {
             width: 60%;
             min-width: 300px;
             margin-bottom: 10px;
             text-align: center;
         }
+
         .scrollable {
             max-height: 400px;
             border: 1px solid #000;
             overflow-y: auto;
             background-color: #fff;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: center;
         }
+
         th, td {
             border: 1px solid #000;
             padding: 8px;
         }
-        .btn {
-            padding: 6px 12px;
-            margin: 5px;
+
+            th.sortable {
+                cursor: pointer;
+                background-color: #f2f2f2;
+            }
+
+        .link-blue {
+            color: blue;
+            text-decoration: underline;
             cursor: pointer;
+        }
+        #adminCustomerSearch {
+            width: 60%;
+            max-width: 400px;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -56,12 +81,14 @@
         <div>
             <button class="btn" onclick="location.href='/Customer/Index'">Back to Customer Index</button>
         </div>
+        <!-- Search bar -->
+        <input type="text" id="adminCustomerSearch" placeholder="Search customers..." onkeyup="filterAdminCustomers()" />
         <div class="table-container">
             <div class="scrollable">
-                <table>
+                <table id="adminCustomersTable">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th class="sortable" onclick="sortAdminCustomers()">Name</th>
                             <th>First Address</th>
                             <th>First Phone</th>
                         </tr>
@@ -87,5 +114,41 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function filterAdminCustomers() {
+            var input = document.getElementById("adminCustomerSearch");
+            var filter = input.value.toUpperCase();
+            var table = document.getElementById("adminCustomersTable");
+            var tr = table.getElementsByTagName("tr");
+
+            for (var i = 1; i < tr.length; i++) {
+                var td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    var txtValue = td.textContent || td.innerText;
+                    tr[i].style.display = (txtValue.toUpperCase().indexOf(filter) > -1) ? "" : "none";
+                }
+            }
+        }
+
+        let sortDirection = 'asc';
+        function sortAdminCustomers() {
+            const table = document.getElementById("adminCustomersTable");
+            const tbody = table.getElementsByTagName("tbody")[0];
+            let rows = Array.from(tbody.getElementsByTagName("tr"));
+
+            rows.sort((a, b) => {
+                let aText = a.cells[0].innerText.toLowerCase();
+                let bText = b.cells[0].innerText.toLowerCase();
+                if (aText < bText) return sortDirection === 'asc' ? -1 : 1;
+                if (aText > bText) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            sortDirection = (sortDirection === 'asc') ? 'desc' : 'asc';
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
 </body>
 </html>

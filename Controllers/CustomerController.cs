@@ -99,7 +99,6 @@ namespace CustomerHub.Controllers
         [HttpGet]
         public IActionResult GetAddresses(int customerId)
         {
-            // Optionally, you could verify that this customer belongs to the logged-in user.
             var addresses = _db.ListAddresses(customerId);
             return Json(addresses);
         }
